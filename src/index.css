@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gold: #c9a45c;
+  --gold-soft: #e3c585;
+  --noir: #0a0907;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+  -webkit-text-size-adjust: 100%; /* prevent iOS font scaling */
+}
+
+body {
+  margin: 0;
+  background: var(--noir);
+  color: #f4ecdd;
+  font-family: "Inter", system-ui, sans-serif;
+  overflow-x: hidden;
+  min-height: 100dvh;
+}
+
+/* ---------- Selection ---------- */
+::selection {
+  background: rgba(201, 164, 92, 0.85);
+  color: #0a0907;
+}
+
+/* ---------- Scrollbar (desktop only) ---------- */
+@media (min-width: 1024px) {
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0907;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(#a07b34, #c9a45c);
+    border-radius: 999px;
+  }
+}
+
+/* Hide native cursor on devices that support a custom one */
+@media (hover: hover) and (pointer: fine) {
+  body.has-custom-cursor * {
+    cursor: none !important;
+  }
+}
+
+@layer components {
+  /* Glassmorphism surface */
+  .glass {
+    background: rgba(28, 24, 19, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(201, 164, 92, 0.16);
+  }
+
+  .glass-strong {
+    background: rgba(19, 17, 13, 0.78);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(201, 164, 92, 0.22);
+  }
+
+  /* Gold gradient text */
+  .text-gold-gradient {
+    background: linear-gradient(100deg, #a07b34 0%, #e3c585 45%, #fff7e6 55%, #c9a45c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% auto;
+  }
+
+  /* Shimmering gold (animated) */
+  .text-gold-shimmer {
+    background: linear-gradient(100deg, #a07b34 0%, #e3c585 40%, #fff7e6 50%, #e3c585 60%, #a07b34 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% auto;
+    animation: shimmerText 6s linear infinite;
+  }
+
+  @keyframes shimmerText {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  /* Hairline label */
+  .eyebrow {
+    font-family: "Poppins", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.65rem;
+    color: rgba(201, 164, 92, 0.85);
+  }
+
+  @media (min-width: 640px) {
+    .eyebrow {
+      letter-spacing: 0.35em;
+      font-size: 0.7rem;
+    }
+  }
+
+  .hairline {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(201, 164, 92, 0.6),
+      transparent
+    );
+  }
+
+  /* Touch-friendly minimum tap target */
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: grid;
+    place-items: center;
+  }
+}
+
+@layer utilities {
+  /* Responsive container — tighter on mobile, generous on desktop */
+  .container-luxe {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  @media (min-width: 375px) {
+    .container-luxe {
+      padding-inline: 1.25rem;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .container-luxe {
+      padding-inline: 1.75rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .container-luxe {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .container-luxe {
+      padding-inline: 2rem;
+    }
+  }
+
+  .noise {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  }
+
+  /* Section spacing — mobile first, scales up */
+  .section-pad {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  @media (min-width: 640px) {
+    .section-pad {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-pad {
+      padding-top: 7rem;
+      padding-bottom: 7rem;
+    }
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
